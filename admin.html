@@ -133,6 +133,7 @@
             line-height: 2;
             display: none;
             white-space: pre-wrap;
+            word-break: break-word;
         }
 
         .status.show {
@@ -233,12 +234,12 @@
 
 
         <div class="field">
-            <label>فایل آهنگ MP3</label>
+            <label>فایل آهنگ</label>
 
             <input
                 type="file"
                 id="musicFile"
-                accept=".mp3,audio/mpeg"
+                accept=".mp3,audio/*"
             >
         </div>
 
@@ -284,17 +285,13 @@
 
 <script>
 
-    /* ==============================
-       تنظیمات Supabase
-       ============================== */
-
     const SUPABASE_URL =
         "https://ofrzopzcbnzkfqekxids.supabase.co";
 
 
     /*
-       اینجا Publishable Key خودت را قرار بده.
-       کلید باید با sb_publishable_ شروع شود.
+       Publishable Key خودت را اینجا قرار بده.
+       باید با sb_publishable_ شروع شود.
     */
 
     const SUPABASE_KEY =
@@ -356,8 +353,7 @@
 
 
         const fileInput =
-            document
-            .getElementById("musicFile");
+            document.getElementById("musicFile");
 
 
         const file =
@@ -365,30 +361,69 @@
 
 
         const button =
-            document
-            .getElementById("uploadButton");
+            document.getElementById("uploadButton");
 
 
         if (!title) {
-            showStatus("❌ نام آهنگ را وارد کنید.");
+
+            showStatus(
+                "❌ نام آهنگ را وارد کنید."
+            );
+
             return;
         }
 
 
         if (!file) {
-            showStatus("❌ فایل MP3 را انتخاب کنید.");
+
+            showStatus(
+                "❌ فایل آهنگ را انتخاب کنید."
+            );
+
             return;
         }
 
 
-        if (file.type !== "audio/mpeg") {
-            showStatus("❌ فقط فایل MP3 مجاز است.");
+        const fileName =
+            file.name.toLowerCase();
+
+
+        const isMP3 =
+            fileName.endsWith(".mp3");
+
+
+        if (!isMP3) {
+
+            showStatus(
+                "❌ این فایل MP3 نیست.\n\n" +
+                "لطفاً یک فایل با پسوند .mp3 انتخاب کنید."
+            );
+
             return;
         }
 
 
-        if (file.size > 50 * 1024 * 1024) {
-            showStatus("❌ حجم فایل نباید بیشتر از ۵۰ مگابایت باشد.");
+        if (
+            file.size === 0
+        ) {
+
+            showStatus(
+                "❌ فایل خالی است."
+            );
+
+            return;
+        }
+
+
+        if (
+            file.size >
+            50 * 1024 * 1024
+        ) {
+
+            showStatus(
+                "❌ حجم فایل بیشتر از ۵۰ مگابایت است."
+            );
+
             return;
         }
 
@@ -402,10 +437,7 @@
         try {
 
             const extension =
-                file.name
-                .split(".")
-                .pop()
-                .toLowerCase();
+                "mp3";
 
 
             const safeName =
@@ -419,11 +451,11 @@
 
 
             showStatus(
-                "☁️ در حال ارسال فایل به Supabase..."
+                "☁️ در حال ارسال فایل..."
             );
 
 
-            const { error: uploadError } =
+            const result =
                 await supabaseClient
                 .storage
                 .from("music")
@@ -432,33 +464,40 @@
                     file,
                     {
                         contentType: "audio/mpeg",
+                        cacheControl: "3600",
                         upsert: false
                     }
                 );
 
 
-            if (uploadError) {
-                throw uploadError;
+            if (result.error) {
+
+                throw result.error;
+
             }
 
 
-            const { data } =
+            const publicResult =
                 supabaseClient
                 .storage
                 .from("music")
-                .getPublicUrl(safeName);
+                .getPublicUrl(
+                    safeName
+                );
 
 
             const publicUrl =
-                data.publicUrl;
+                publicResult
+                .data
+                .publicUrl;
 
 
             showStatus(
-                "✅ آهنگ با موفقیت آپلود شد!\n\n" +
-                "نام: " + title +
-                "\nسبک: " + genre +
-                "\nحال‌وهوا: " + mood +
-                "\n\nآدرس فایل:\n" +
+                "✅ آپلود با موفقیت انجام شد!\n\n" +
+                "🎵 نام: " + title +
+                "\n🎼 سبک: " + genre +
+                "\n🌙 حال‌وهوا: " + mood +
+                "\n\n🔗 آدرس فایل:\n" +
                 publicUrl
             );
 
@@ -469,7 +508,11 @@
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Supabase Upload Error:",
+                error
+            );
+
 
             showStatus(
                 "❌ آپلود انجام نشد.\n\n" +
