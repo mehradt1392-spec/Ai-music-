@@ -1,1 +1,423 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مدیریت | AI موزیک</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at 20% 10%, rgba(130,70,255,.18), transparent 30%),
+                radial-gradient(circle at 80% 90%, rgba(0,180,255,.10), transparent 30%),
+                #07070c;
+
+            color: white;
+
+            min-height: 100vh;
+
+            padding: 30px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #888;
+            line-height: 2;
+        }
+
+        .panel {
+            background: rgba(255,255,255,.055);
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            border-radius: 25px;
+
+            padding: 30px;
+
+            backdrop-filter: blur(20px);
+
+            box-shadow: 0 25px 70px rgba(0,0,0,.35);
+        }
+
+        .panel h2 {
+            margin-bottom: 25px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #bbb;
+
+            font-size: 14px;
+        }
+
+        input,
+        textarea,
+        select {
+
+            width: 100%;
+
+            padding: 14px 16px;
+
+            border-radius: 14px;
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            background: rgba(255,255,255,.06);
+
+            color: white;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: rgba(180,130,255,.6);
+        }
+
+        select option {
+            background: #15151d;
+        }
+
+        input[type="file"] {
+            padding: 12px;
+        }
+
+        .button {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            background: linear-gradient(90deg,#7040b5,#9c68e8);
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+
+            box-shadow: 0 10px 30px rgba(130,80,200,.25);
+        }
+
+        .notice {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,.04);
+
+            color: #999;
+
+            line-height: 2;
+
+            font-size: 13px;
+        }
+
+        .back {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #aaa;
+
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        @media(max-width:600px) {
+
+            body {
+                padding: 20px 15px;
+            }
+
+            .panel {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <header>
+
+        <div class="logo">
+            🎧 AI موزیک
+        </div>
+
+        <p>
+            پنل مدیریت و افزودن موسیقی
+        </p>
+
+    </header>
+
+
+    <div class="panel">
+
+        <h2>
+            ➕ افزودن آهنگ جدید
+        </h2>
+
+
+        <div class="field">
+
+            <label>
+                نام آهنگ
+            </label>
+
+            <input
+                type="text"
+                id="title"
+                placeholder="مثلاً: شب‌های تهران"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                توضیحات
+            </label>
+
+            <textarea
+                id="description"
+                placeholder="توضیح کوتاهی دربارهٔ آهنگ..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                سبک موسیقی
+            </label>
+
+            <select id="genre">
+
+                <option value="پاپ">
+                    پاپ
+                </option>
+
+                <option value="جاز">
+                    جاز
+                </option>
+
+                <option value="راک">
+                    راک
+                </option>
+
+                <option value="الکترونیک">
+                    الکترونیک
+                </option>
+
+                <option value="سینمایی">
+                    سینمایی
+                </option>
+
+                <option value="آرام">
+                    آرام
+                </option>
+
+                <option value="سایر">
+                    سایر
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                حال‌وهوای آهنگ
+            </label>
+
+            <input
+                type="text"
+                id="mood"
+                placeholder="مثلاً: آرام، غمگین، حماسی..."
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                فایل آهنگ MP3
+            </label>
+
+            <input
+                type="file"
+                id="musicFile"
+                accept=".mp3,audio/mpeg"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ایموجی کاور
+            </label>
+
+            <input
+                type="text"
+                id="cover"
+                value="🎵"
+                maxlength="2"
+            >
+
+        </div>
+
+
+        <button
+            class="button"
+            onclick="prepareSong()"
+        >
+            🎵 آماده‌سازی آهنگ
+        </button>
+
+
+        <div class="notice">
+
+            ⚠️ این نسخه فعلاً فقط فرم مدیریت را آماده می‌کند.
+            در مرحلهٔ بعد، آن را به سیستم ذخیره‌سازی متصل می‌کنیم
+            تا آهنگ واقعاً از همین پنل منتشر شود.
+
+        </div>
+
+    </div>
+
+
+    <a
+        class="back"
+        href="index.html"
+    >
+        ← بازگشت به سایت
+    </a>
+
+
+</div>
+
+
+<script>
+
+function prepareSong() {
+
+    const title =
+        document.getElementById("title").value.trim();
+
+    const file =
+        document.getElementById("musicFile").files[0];
+
+
+    if (!title) {
+
+        alert("لطفاً نام آهنگ را وارد کنید.");
+
+        return;
+
+    }
+
+
+    if (!file) {
+
+        alert("لطفاً فایل MP3 را انتخاب کنید.");
+
+        return;
+
+    }
+
+
+    alert(
+        "اطلاعات آهنگ آماده است.\n\n" +
+        "در مرحله بعد، همین فرم را به سیستم انتشار واقعی وصل می‌کنیم."
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
