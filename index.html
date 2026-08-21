@@ -8,7 +8,6 @@
     <title>AI موزیک | کتابخانه موسیقی</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -18,8 +17,8 @@
         body {
             font-family: Tahoma, Arial, sans-serif;
             background:
-                radial-gradient(circle at 15% 10%, rgba(130, 70, 255, .18), transparent 30%),
-                radial-gradient(circle at 85% 80%, rgba(0, 180, 255, .10), transparent 30%),
+                radial-gradient(circle at 15% 10%, rgba(130,70,255,.18), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(0,180,255,.10), transparent 30%),
                 #07070c;
             color: #fff;
             min-height: 100vh;
@@ -37,8 +36,6 @@
             transform: rotate(-15deg) scale(1.5);
             pointer-events: none;
         }
-
-        /* HEADER */
 
         header {
             position: sticky;
@@ -72,8 +69,6 @@
         nav a:hover {
             color: #fff;
         }
-
-        /* HERO */
 
         .hero {
             text-align: center;
@@ -113,8 +108,6 @@
             max-width: 650px;
             margin: auto;
         }
-
-        /* SEARCH */
 
         .search-area {
             width: 90%;
@@ -161,8 +154,6 @@
             color: #777;
         }
 
-        /* MUSIC */
-
         .music-section {
             width: 90%;
             max-width: 1100px;
@@ -202,8 +193,6 @@
 
             box-shadow: 0 25px 70px rgba(0,0,0,.35);
         }
-
-        /* COVER */
 
         .cover {
             width: 100%;
@@ -260,7 +249,11 @@
             margin-top: 12px;
         }
 
-        /* ABOUT */
+        .message {
+            text-align: center;
+            color: #777;
+            padding: 40px;
+        }
 
         .about {
             width: 90%;
@@ -287,8 +280,6 @@
             line-height: 2;
         }
 
-        /* FOOTER */
-
         footer {
             text-align: center;
 
@@ -298,8 +289,6 @@
 
             color: #666;
         }
-
-        /* MOBILE */
 
         @media(max-width:650px) {
 
@@ -322,15 +311,11 @@
             .cover {
                 height: 240px;
             }
-
         }
-
     </style>
-
 </head>
 
 <body>
-
 
 <header>
 
@@ -390,55 +375,11 @@
         🎶 آهنگ‌های من
     </h2>
 
-
     <div class="music-grid" id="musicGrid">
 
-
-        <!-- آهنگ اول -->
-
-        <div class="music-card" data-title="نیمه شب بارانی">
-
-            <div class="cover">
-                🎷
-            </div>
-
-            <h3>
-                نیمه‌شبِ بارانی
-            </h3>
-
-            <p class="description">
-                یک قطعهٔ جازِ آرام و شبانه.
-            </p>
-
-            <div class="tags">
-
-                <span class="tag">
-                    جاز
-                </span>
-
-                <span class="tag">
-                    آرام
-                </span>
-
-                <span class="tag">
-                    شبانه
-                </span>
-
-            </div>
-
-            <audio controls preload="metadata">
-
-                <source
-                    src="suno-song-7852546b.mp3o.mp3"
-                    type="audio/mpeg"
-                >
-
-                مرورگر شما از پخش‌کنندهٔ صوتی پشتیبانی نمی‌کند.
-
-            </audio>
-
+        <div class="message">
+            در حال بارگذاری آهنگ‌ها...
         </div>
-
 
     </div>
 
@@ -469,38 +410,141 @@
 
 <script>
 
+let allSongs = [];
+
+
+async function loadSongs() {
+
+    const musicGrid =
+        document.getElementById("musicGrid");
+
+    try {
+
+        const response =
+            await fetch("songs.json");
+
+        if (!response.ok) {
+            throw new Error("songs.json پیدا نشد");
+        }
+
+        allSongs = await response.json();
+
+        displaySongs(allSongs);
+
+    } catch (error) {
+
+        musicGrid.innerHTML = `
+            <div class="message">
+                ❌ بارگذاری آهنگ‌ها انجام نشد.
+            </div>
+        `;
+
+        console.error(error);
+    }
+}
+
+
+function displaySongs(songs) {
+
+    const musicGrid =
+        document.getElementById("musicGrid");
+
+    if (songs.length === 0) {
+
+        musicGrid.innerHTML = `
+            <div class="message">
+                آهنگی پیدا نشد.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    musicGrid.innerHTML = "";
+
+
+    songs.forEach(song => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "music-card";
+
+        card.dataset.title =
+            song.title.toLowerCase();
+
+
+        card.innerHTML = `
+
+            <div class="cover">
+                ${song.cover || "🎵"}
+            </div>
+
+            <h3>
+                ${song.title}
+            </h3>
+
+            <p class="description">
+                ${song.description || ""}
+            </p>
+
+            <div class="tags">
+
+                <span class="tag">
+                    ${song.genre || "موسیقی"}
+                </span>
+
+                <span class="tag">
+                    ${song.mood || "متفاوت"}
+                </span>
+
+            </div>
+
+            <audio controls preload="metadata">
+
+                <source
+                    src="${song.file}"
+                    type="audio/mpeg"
+                >
+
+                مرورگر شما از پخش‌کنندهٔ صوتی پشتیبانی نمی‌کند.
+
+            </audio>
+
+        `;
+
+
+        musicGrid.appendChild(card);
+
+    });
+
+}
+
+
 function searchSongs() {
 
     const input =
         document
         .getElementById("search")
         .value
+        .trim()
         .toLowerCase();
 
-    const songs =
-        document
-        .querySelectorAll(".music-card");
 
-    songs.forEach(song => {
+    const filteredSongs =
+        allSongs.filter(song =>
+            song.title
+            .toLowerCase()
+            .includes(input)
+        );
 
-        const title =
-            song
-            .getAttribute("data-title")
-            .toLowerCase();
 
-        if (title.includes(input)) {
-
-            song.style.display = "";
-
-        } else {
-
-            song.style.display = "none";
-
-        }
-
-    });
-
+    displaySongs(filteredSongs);
 }
+
+
+loadSongs();
 
 </script>
 
