@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI موزیک | موسیقی‌های من</title>
+    <title>AI موزیک | کتابخانه موسیقی</title>
 
     <style>
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: Tahoma, Arial, sans-serif;
             background:
-                radial-gradient(circle at 20% 20%, rgba(130, 80, 255, 0.15), transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(0, 190, 255, 0.10), transparent 30%),
-                #08080d;
+                radial-gradient(circle at 15% 10%, rgba(130, 70, 255, .18), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(0, 180, 255, .10), transparent 30%),
+                #07070c;
             color: #fff;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         body::before {
-            content: "♪   ♫   ♬   ♪   ♫   ♪   ♬";
+            content: "♫ ♪ ♬ ♪ ♫ ♬ ♪ ♫";
             position: fixed;
             inset: 0;
-            font-size: 70px;
-            line-height: 2;
-            letter-spacing: 35px;
-            color: rgba(255,255,255,0.025);
-            transform: rotate(-12deg) scale(1.4);
-            pointer-events: none;
             z-index: -1;
+            font-size: 80px;
+            line-height: 2;
+            letter-spacing: 45px;
+            color: rgba(255,255,255,.025);
+            transform: rotate(-15deg) scale(1.5);
+            pointer-events: none;
         }
 
+        /* HEADER */
+
         header {
-            padding: 25px 7%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(15px);
-            background: rgba(8,8,13,0.65);
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 100;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 7%;
+
+            background: rgba(7,7,12,.75);
+            backdrop-filter: blur(20px);
+
+            border-bottom: 1px solid rgba(255,255,255,.08);
         }
 
         .logo {
@@ -56,134 +63,248 @@
         }
 
         nav a {
-            color: #bbb;
+            color: #aaa;
             text-decoration: none;
             margin-right: 25px;
-            transition: 0.3s;
+            transition: .3s;
         }
 
         nav a:hover {
-            color: white;
+            color: #fff;
         }
+
+        /* HERO */
 
         .hero {
-            min-height: 65vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             text-align: center;
-            padding: 70px 20px;
-        }
-
-        .hero-content {
-            max-width: 850px;
+            padding: 100px 20px 80px;
         }
 
         .badge {
             display: inline-block;
+
             padding: 9px 18px;
-            border: 1px solid rgba(169,112,255,0.35);
             border-radius: 30px;
-            color: #c9a7ff;
-            background: rgba(169,112,255,0.08);
+
+            background: rgba(150,90,255,.10);
+            border: 1px solid rgba(170,110,255,.3);
+
+            color: #caaaff;
+
             margin-bottom: 25px;
         }
 
         h1 {
-            font-size: clamp(42px, 8vw, 78px);
+            font-size: clamp(45px, 9vw, 85px);
             line-height: 1.2;
             margin-bottom: 20px;
         }
 
         h1 span {
-            background: linear-gradient(90deg, #ffffff, #b88cff);
+            background: linear-gradient(90deg,#fff,#b88cff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            color: #aaa;
+            color: #999;
             font-size: 18px;
             line-height: 2;
             max-width: 650px;
             margin: auto;
         }
 
+        /* SEARCH */
+
+        .search-area {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto 60px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+
+            background: rgba(255,255,255,.06);
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            border-radius: 18px;
+
+            padding: 5px 18px;
+
+            backdrop-filter: blur(15px);
+        }
+
+        .search-box span {
+            font-size: 22px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            background: none;
+            border: none;
+            outline: none;
+
+            color: white;
+
+            padding: 16px;
+
+            font-size: 16px;
+
+            font-family: inherit;
+        }
+
+        .search-box input::placeholder {
+            color: #777;
+        }
+
+        /* MUSIC */
+
         .music-section {
             width: 90%;
             max-width: 1100px;
             margin: auto;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
         }
 
         .section-title {
-            font-size: 28px;
-            margin-bottom: 25px;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+            gap: 25px;
         }
 
         .music-card {
-            background: rgba(255,255,255,0.055);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,.055);
+
+            border: 1px solid rgba(255,255,255,.08);
+
             border-radius: 25px;
-            padding: 25px;
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+
+            padding: 20px;
+
+            transition: .35s;
+
+            backdrop-filter: blur(15px);
         }
 
+        .music-card:hover {
+            transform: translateY(-7px);
+
+            border-color: rgba(180,130,255,.35);
+
+            box-shadow: 0 25px 70px rgba(0,0,0,.35);
+        }
+
+        /* COVER */
+
         .cover {
-            width: 150px;
-            height: 150px;
+            width: 100%;
+            height: 220px;
+
             border-radius: 20px;
-            background: linear-gradient(135deg, #17121f, #6d3ab4);
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 55px;
-            flex-shrink: 0;
-        }
 
-        .music-info {
-            flex: 1;
-        }
+            font-size: 70px;
 
-        .music-info h3 {
-            font-size: 25px;
-            margin-bottom: 10px;
-        }
+            background:
+                radial-gradient(circle at 30% 30%,#8e5bd5,transparent 40%),
+                linear-gradient(135deg,#16101f,#39205c);
 
-        .music-info p {
-            color: #999;
             margin-bottom: 20px;
         }
 
-        .tags span {
+        .music-card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #999;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .tags {
+            margin-bottom: 10px;
+        }
+
+        .tag {
             display: inline-block;
-            background: rgba(255,255,255,0.07);
-            color: #bbb;
-            padding: 7px 12px;
+
+            background: rgba(255,255,255,.07);
+
+            color: #aaa;
+
+            padding: 6px 11px;
+
             border-radius: 20px;
-            margin-left: 7px;
-            font-size: 13px;
+
+            font-size: 12px;
+
+            margin-left: 5px;
         }
 
         audio {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 12px;
         }
+
+        /* ABOUT */
+
+        .about {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+
+            padding: 35px;
+
+            border-radius: 25px;
+
+            background: rgba(255,255,255,.04);
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            margin-bottom: 80px;
+        }
+
+        .about h2 {
+            margin-bottom: 15px;
+        }
+
+        .about p {
+            color: #999;
+            line-height: 2;
+        }
+
+        /* FOOTER */
 
         footer {
             text-align: center;
-            padding: 30px;
-            border-top: 1px solid rgba(255,255,255,0.07);
-            color: #777;
+
+            padding: 35px;
+
+            border-top: 1px solid rgba(255,255,255,.07);
+
+            color: #666;
         }
 
-        @media (max-width: 650px) {
+        /* MOBILE */
+
+        @media(max-width:650px) {
+
             header {
-                padding: 20px;
+                padding: 18px 20px;
             }
 
             nav {
@@ -191,27 +312,25 @@
             }
 
             .hero {
-                min-height: 55vh;
+                padding-top: 70px;
             }
 
-            .music-card {
-                flex-direction: column;
-                text-align: center;
+            .music-grid {
+                grid-template-columns: 1fr;
             }
 
             .cover {
-                width: 180px;
-                height: 180px;
+                height: 240px;
             }
 
-            .tags span {
-                margin: 4px;
-            }
         }
+
     </style>
+
 </head>
 
 <body>
+
 
 <header>
 
@@ -227,86 +346,165 @@
 
 </header>
 
+
 <section class="hero">
 
-    <div class="hero-content">
+    <div class="badge">
+        ✨ موسیقی ساخته‌شده با هوش مصنوعی
+    </div>
 
-        <div class="badge">
-            🎵 موسیقی ساخته‌شده با هوش مصنوعی
-        </div>
+    <h1>
+        دنیای
+        <span>AI موزیک</span>
+    </h1>
 
-        <h1>
-            دنیای موسیقی
-            <span>من</span>
-        </h1>
+    <p>
+        مجموعه‌ای از موسیقی‌های ساخته‌شده با هوش مصنوعی،
+        ایده‌های جدید و حال‌وهوای متفاوت.
+    </p>
 
-        <p>
-            مجموعه‌ای از آهنگ‌هایی که با خلاقیت،
-            احساس و فناوری هوش مصنوعی ساخته شده‌اند.
-        </p>
+</section>
+
+
+<div class="search-area">
+
+    <div class="search-box">
+
+        <span>🔎</span>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="نام آهنگ را جست‌وجو کنید..."
+            onkeyup="searchSongs()"
+        >
 
     </div>
 
-</section>
+</div>
+
 
 <section class="music-section" id="music">
 
     <h2 class="section-title">
-        🎶 آخرین آهنگ
+        🎶 آهنگ‌های من
     </h2>
 
-    <div class="music-card">
 
-        <div class="cover">
-            🎷
-        </div>
+    <div class="music-grid" id="musicGrid">
 
-        <div class="music-info">
+
+        <!-- آهنگ اول -->
+
+        <div class="music-card" data-title="نیمه شب بارانی">
+
+            <div class="cover">
+                🎷
+            </div>
 
             <h3>
                 نیمه‌شبِ بارانی
             </h3>
 
-            <p>
-                یک قطعهٔ جازِ آرام و شبانه
+            <p class="description">
+                یک قطعهٔ جازِ آرام و شبانه.
             </p>
 
             <div class="tags">
-                <span>جاز</span>
-                <span>آرام</span>
-                <span>شبانه</span>
+
+                <span class="tag">
+                    جاز
+                </span>
+
+                <span class="tag">
+                    آرام
+                </span>
+
+                <span class="tag">
+                    شبانه
+                </span>
+
             </div>
 
             <audio controls preload="metadata">
-                <source src="suno-song-7852546b.mp3o.mp3" type="audio/mpeg">
+
+                <source
+                    src="suno-song-7852546b.mp3o.mp3"
+                    type="audio/mpeg"
+                >
+
                 مرورگر شما از پخش‌کنندهٔ صوتی پشتیبانی نمی‌کند.
+
             </audio>
 
         </div>
+
 
     </div>
 
 </section>
 
-<section class="music-section" id="about">
 
-    <h2 class="section-title">
-        دربارهٔ AI موزیک
+<section class="about" id="about">
+
+    <h2>
+        🎧 دربارهٔ AI موزیک
     </h2>
 
-    <p style="color:#999; line-height:2; max-width:700px;">
-        AI موزیک یک مجموعهٔ شخصی از موسیقی‌های ساخته‌شده
-        با استفاده از هوش مصنوعی است.
-        هر آهنگ با یک ایده و فضای متفاوت ساخته می‌شود.
+    <p>
+        اینجا مجموعهٔ شخصی موسیقی‌های ساخته‌شده
+        با هوش مصنوعی است.
+        هر آهنگ با یک ایده، سبک و فضای متفاوت ساخته می‌شود.
     </p>
 
 </section>
 
+
 <footer>
 
-    © ۲۰۲۶ AI موزیک — همهٔ آهنگ‌ها متعلق به سازنده هستند.
+    © ۲۰۲۶ AI موزیک
 
 </footer>
 
+
+<script>
+
+function searchSongs() {
+
+    const input =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const songs =
+        document
+        .querySelectorAll(".music-card");
+
+    songs.forEach(song => {
+
+        const title =
+            song
+            .getAttribute("data-title")
+            .toLowerCase();
+
+        if (title.includes(input)) {
+
+            song.style.display = "";
+
+        } else {
+
+            song.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+
 </body>
+
 </html>
