@@ -2,15 +2,14 @@
 <html lang="fa" dir="rtl">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>مدیریت | AI موزیک</title>
 
-    <style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <style>
         * {
             box-sizing: border-box;
             margin: 0;
@@ -19,16 +18,12 @@
 
         body {
             font-family: Tahoma, Arial, sans-serif;
-
             background:
                 radial-gradient(circle at 20% 10%, rgba(130,70,255,.18), transparent 30%),
                 radial-gradient(circle at 80% 90%, rgba(0,180,255,.10), transparent 30%),
                 #07070c;
-
             color: white;
-
             min-height: 100vh;
-
             padding: 30px 20px;
         }
 
@@ -56,15 +51,10 @@
 
         .panel {
             background: rgba(255,255,255,.055);
-
             border: 1px solid rgba(255,255,255,.08);
-
             border-radius: 25px;
-
             padding: 30px;
-
             backdrop-filter: blur(20px);
-
             box-shadow: 0 25px 70px rgba(0,0,0,.35);
         }
 
@@ -78,46 +68,28 @@
 
         label {
             display: block;
-
             margin-bottom: 8px;
-
             color: #bbb;
-
             font-size: 14px;
         }
 
         input,
         textarea,
         select {
-
             width: 100%;
-
             padding: 14px 16px;
-
             border-radius: 14px;
-
             border: 1px solid rgba(255,255,255,.1);
-
             background: rgba(255,255,255,.06);
-
             color: white;
-
             outline: none;
-
             font-family: inherit;
-
             font-size: 15px;
         }
 
         textarea {
             min-height: 120px;
             resize: vertical;
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: rgba(180,130,255,.6);
         }
 
         select option {
@@ -129,61 +101,49 @@
         }
 
         .button {
-
             width: 100%;
-
             padding: 15px;
-
             border: none;
-
             border-radius: 15px;
-
             background: linear-gradient(90deg,#7040b5,#9c68e8);
-
             color: white;
-
             font-family: inherit;
-
             font-size: 16px;
-
             cursor: pointer;
-
             transition: .3s;
         }
 
         .button:hover {
             transform: translateY(-2px);
-
             box-shadow: 0 10px 30px rgba(130,80,200,.25);
         }
 
-        .notice {
+        .button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
 
+        .status {
             margin-top: 20px;
-
             padding: 15px;
-
             border-radius: 14px;
-
             background: rgba(255,255,255,.04);
-
-            color: #999;
-
+            color: #aaa;
             line-height: 2;
+            display: none;
+            white-space: pre-wrap;
+        }
 
-            font-size: 13px;
+        .status.show {
+            display: block;
         }
 
         .back {
-
             display: block;
-
             text-align: center;
-
             margin-top: 25px;
-
             color: #aaa;
-
             text-decoration: none;
         }
 
@@ -192,7 +152,6 @@
         }
 
         @media(max-width:600px) {
-
             body {
                 padding: 20px 15px;
             }
@@ -200,21 +159,15 @@
             .panel {
                 padding: 22px;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
 <div class="container">
 
-
     <header>
-
         <div class="logo">
             🎧 AI موزیک
         </div>
@@ -222,7 +175,6 @@
         <p>
             پنل مدیریت و افزودن موسیقی
         </p>
-
     </header>
 
 
@@ -234,110 +186,65 @@
 
 
         <div class="field">
-
-            <label>
-                نام آهنگ
-            </label>
+            <label>نام آهنگ</label>
 
             <input
                 type="text"
                 id="title"
                 placeholder="مثلاً: شب‌های تهران"
             >
-
         </div>
 
 
         <div class="field">
-
-            <label>
-                توضیحات
-            </label>
+            <label>توضیحات</label>
 
             <textarea
                 id="description"
                 placeholder="توضیح کوتاهی دربارهٔ آهنگ..."
             ></textarea>
-
         </div>
 
 
         <div class="field">
-
-            <label>
-                سبک موسیقی
-            </label>
+            <label>سبک موسیقی</label>
 
             <select id="genre">
-
-                <option value="پاپ">
-                    پاپ
-                </option>
-
-                <option value="جاز">
-                    جاز
-                </option>
-
-                <option value="راک">
-                    راک
-                </option>
-
-                <option value="الکترونیک">
-                    الکترونیک
-                </option>
-
-                <option value="سینمایی">
-                    سینمایی
-                </option>
-
-                <option value="آرام">
-                    آرام
-                </option>
-
-                <option value="سایر">
-                    سایر
-                </option>
-
+                <option value="پاپ">پاپ</option>
+                <option value="جاز">جاز</option>
+                <option value="راک">راک</option>
+                <option value="الکترونیک">الکترونیک</option>
+                <option value="سینمایی">سینمایی</option>
+                <option value="آرام">آرام</option>
+                <option value="سایر">سایر</option>
             </select>
-
         </div>
 
 
         <div class="field">
-
-            <label>
-                حال‌وهوای آهنگ
-            </label>
+            <label>حال‌وهوای آهنگ</label>
 
             <input
                 type="text"
                 id="mood"
                 placeholder="مثلاً: آرام، غمگین، حماسی..."
             >
-
         </div>
 
 
         <div class="field">
-
-            <label>
-                فایل آهنگ MP3
-            </label>
+            <label>فایل آهنگ MP3</label>
 
             <input
                 type="file"
                 id="musicFile"
                 accept=".mp3,audio/mpeg"
             >
-
         </div>
 
 
         <div class="field">
-
-            <label>
-                ایموجی کاور
-            </label>
+            <label>ایموجی کاور</label>
 
             <input
                 type="text"
@@ -345,25 +252,22 @@
                 value="🎵"
                 maxlength="2"
             >
-
         </div>
 
 
         <button
             class="button"
-            onclick="prepareSong()"
+            id="uploadButton"
+            onclick="uploadSong()"
         >
-            🎵 آماده‌سازی آهنگ
+            🚀 آپلود آهنگ
         </button>
 
 
-        <div class="notice">
-
-            ⚠️ این نسخه فعلاً فقط فرم مدیریت را آماده می‌کند.
-            در مرحلهٔ بعد، آن را به سیستم ذخیره‌سازی متصل می‌کنیم
-            تا آهنگ واقعاً از همین پنل منتشر شود.
-
-        </div>
+        <div
+            class="status"
+            id="status"
+        ></div>
 
     </div>
 
@@ -375,48 +279,214 @@
         ← بازگشت به سایت
     </a>
 
-
 </div>
 
 
 <script>
 
-function prepareSong() {
+    /* ==============================
+       تنظیمات Supabase
+       ============================== */
 
-    const title =
-        document.getElementById("title").value.trim();
-
-    const file =
-        document.getElementById("musicFile").files[0];
+    const SUPABASE_URL =
+        "https://ofrzopzcbnzkfqekxids.supabase.co";
 
 
-    if (!title) {
+    /*
+       اینجا Publishable Key خودت را قرار بده.
+       کلید باید با sb_publishable_ شروع شود.
+    */
 
-        alert("لطفاً نام آهنگ را وارد کنید.");
+    const SUPABASE_KEY =
+        "اینجا";
 
-        return;
 
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+    function showStatus(message) {
+
+        const status =
+            document.getElementById("status");
+
+        status.textContent = message;
+
+        status.classList.add("show");
     }
 
 
-    if (!file) {
+    async function uploadSong() {
 
-        alert("لطفاً فایل MP3 را انتخاب کنید.");
+        const title =
+            document
+            .getElementById("title")
+            .value
+            .trim();
 
-        return;
+
+        const description =
+            document
+            .getElementById("description")
+            .value
+            .trim();
+
+
+        const genre =
+            document
+            .getElementById("genre")
+            .value;
+
+
+        const mood =
+            document
+            .getElementById("mood")
+            .value
+            .trim();
+
+
+        const cover =
+            document
+            .getElementById("cover")
+            .value
+            .trim();
+
+
+        const fileInput =
+            document
+            .getElementById("musicFile");
+
+
+        const file =
+            fileInput.files[0];
+
+
+        const button =
+            document
+            .getElementById("uploadButton");
+
+
+        if (!title) {
+            showStatus("❌ نام آهنگ را وارد کنید.");
+            return;
+        }
+
+
+        if (!file) {
+            showStatus("❌ فایل MP3 را انتخاب کنید.");
+            return;
+        }
+
+
+        if (file.type !== "audio/mpeg") {
+            showStatus("❌ فقط فایل MP3 مجاز است.");
+            return;
+        }
+
+
+        if (file.size > 50 * 1024 * 1024) {
+            showStatus("❌ حجم فایل نباید بیشتر از ۵۰ مگابایت باشد.");
+            return;
+        }
+
+
+        button.disabled = true;
+
+        button.textContent =
+            "⏳ در حال آپلود...";
+
+
+        try {
+
+            const extension =
+                file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+
+            const safeName =
+                Date.now() +
+                "-" +
+                Math.random()
+                .toString(36)
+                .substring(2, 9) +
+                "." +
+                extension;
+
+
+            showStatus(
+                "☁️ در حال ارسال فایل به Supabase..."
+            );
+
+
+            const { error: uploadError } =
+                await supabaseClient
+                .storage
+                .from("music")
+                .upload(
+                    safeName,
+                    file,
+                    {
+                        contentType: "audio/mpeg",
+                        upsert: false
+                    }
+                );
+
+
+            if (uploadError) {
+                throw uploadError;
+            }
+
+
+            const { data } =
+                supabaseClient
+                .storage
+                .from("music")
+                .getPublicUrl(safeName);
+
+
+            const publicUrl =
+                data.publicUrl;
+
+
+            showStatus(
+                "✅ آهنگ با موفقیت آپلود شد!\n\n" +
+                "نام: " + title +
+                "\nسبک: " + genre +
+                "\nحال‌وهوا: " + mood +
+                "\n\nآدرس فایل:\n" +
+                publicUrl
+            );
+
+
+            button.textContent =
+                "✅ آپلود شد";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                "❌ آپلود انجام نشد.\n\n" +
+                "خطا:\n" +
+                error.message
+            );
+
+
+            button.disabled = false;
+
+            button.textContent =
+                "🚀 آپلود آهنگ";
+        }
 
     }
-
-
-    alert(
-        "اطلاعات آهنگ آماده است.\n\n" +
-        "در مرحله بعد، همین فرم را به سیستم انتشار واقعی وصل می‌کنیم."
-    );
-
-}
 
 </script>
-
 
 </body>
 
